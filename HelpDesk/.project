@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>HelpDesk</name>
+	<name>HelpDeskOriginal</name>
 	<comment></comment>
 	<projects>
+		<project>spring-web-4.2.4.RELEASE</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
