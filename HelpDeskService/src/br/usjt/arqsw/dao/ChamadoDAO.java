@@ -4,6 +4,7 @@ package br.usjt.arqsw.dao;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +13,20 @@ import java.util.ArrayList;
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
 
+/** Classe Data Access Object  para comunicaçao com o banco de dados
+ * @author	Ermerson Rafael da Silva
+ * @version 1.00
+ * @since   Release Inicial
+ */
 public class ChamadoDAO {
 	
+	/** Metodo lista todos os Chamados de acordo com uma Fila
+	 * @author	Ermerson Rafael da Silva
+	 * @version 1.00
+	 * @since   Release Inicial
+	 * @param	Fila
+	 * @return 	ArrayList<Chamado>
+	 */	
 	public ArrayList<Chamado> listarChamados(Fila fila) throws IOException {
 		String query = "SELECT CH.ID_CHAMADO, "
 							+ "CH.DESCRICAO, "
@@ -50,5 +63,32 @@ public class ChamadoDAO {
 		}
 		return chamados;
 	}
+	
+	public int incluir(Chamado ch) throws IOException {
+		String string = "INSERT INTO CHAMADO(DESCRICAO, STATUS, DT_ABERTURA, ID_FILA) "
+							+ "VALUES (?, Aberto, Now(), ? )";
+
+		try (Connection conn = ConnectionFactory.getConnection();
+				PreparedStatement stm = conn.prepareStatement(string);) {
+				stm.setString(1, ch.getDescricao());
+				//stm.setString(2, ch.getStatus());
+				//stm.setDate(3, (Date)ch.getDt_abertura());
+				stm.setInt(2, ch.getFila().getId());
+				stm.execute();
+				
+				String sqlQuery = "SELECT LAST_INSERT_ID()";
+				try (PreparedStatement stm2 = conn.prepareStatement(sqlQuery);
+						ResultSet rs = stm2.executeQuery();) {
+					if (rs.next()) {
+						ch.setId(rs.getInt(1));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return ch.getId();
+		}
 
 }

@@ -9,8 +9,20 @@ import java.util.ArrayList;
 
 import br.usjt.arqsw.entity.Fila;
 
+/** Classe Data Access Object  para comunicaçao com o banco de dados
+ * @author	Ermerson Rafael da Silva
+ * @version 1.00
+ * @since   Release Inicial
+ */	
 public class FilaDAO {
-
+	
+	/** Metodo lista todos os Chamados de acordo com uma Fila
+	 * @author	Ermerson Rafael da Silva
+	 * @version 1.00
+	 * @since   Release Inicial
+	 * @param	Fila
+	 * @return 	ArrayList<Chamado>
+	 */	
 	public ArrayList<Fila> listarFilas() throws IOException {
 		String query = "select id_fila, nm_fila from fila";
 		ArrayList<Fila> lista = new ArrayList<>();
@@ -31,6 +43,13 @@ public class FilaDAO {
 		return lista;
 	}
 	
+	/** Metodo Carrega uma Fila de acordo com o Id.
+	 * @author	Ermerson Rafael da Silva
+	 * @version 1.00
+	 * @since   Release Inicial
+	 * @param	int
+	 * @return 	Fila
+	 */	
 	public Fila carregar(int id) throws IOException {
 		Fila fila = new Fila();
 		String query = "SELECT ID_FILA, NM_FILA FROM FILA WHERE FILA.ID_FILA = ?";

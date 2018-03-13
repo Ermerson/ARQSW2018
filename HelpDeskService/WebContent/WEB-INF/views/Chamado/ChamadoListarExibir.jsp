@@ -18,7 +18,7 @@
      <c:import url="../Menu.jsp" />
      <!-- Container Principal-->
      <div id="main" class="container">
-     	<center><h2 class="page-header"> ${fila.nome}</h2></center>     	     	
+     	<h2 class="page-header"> ${fila.nome}</h2>   	     	
         <table class="table">
             <thead>
                 <tr>

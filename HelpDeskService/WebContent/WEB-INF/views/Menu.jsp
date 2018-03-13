@@ -12,7 +12,13 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="listar_filas_exibir">Consultar Chamados</a>
+                    <li>
+                        <a href="listar_filas_exibir">Consultar Chamados</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="novo_chamado">Novo Chamado</a>
                     </li>
                 </ul>
             </div>
