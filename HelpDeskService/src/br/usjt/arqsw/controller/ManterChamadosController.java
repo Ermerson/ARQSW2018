@@ -2,8 +2,10 @@ package br.usjt.arqsw.controller;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,6 @@ import br.usjt.arqsw.entity.Fila;
 import br.usjt.arqsw.service.ChamadoService;
 import br.usjt.arqsw.service.FilaService;
 
-
 /** Classe para controlar as requisições do cliente com o servidor
  * @author	Ermerson Rafael da Silva
  * @version 1.00
@@ -22,10 +23,9 @@ import br.usjt.arqsw.service.FilaService;
  */
 @Controller
 public class ManterChamadosController {
-	
 	private FilaService filaService;
 	private ChamadoService chamadoService;
-
+	
 	/** Metodo construtor da Classe ManterChamados
 	 * @author	Ermerson Rafael da Silva
 	 * @version 1.00
@@ -33,9 +33,10 @@ public class ManterChamadosController {
 	 * @param	Nenhum
 	 * @return 	Nenhum
 	 */
-	public ManterChamadosController() {
-		filaService = new FilaService();
-		chamadoService = new ChamadoService();
+	@Autowired
+	public ManterChamadosController(FilaService filaService, ChamadoService chamadoService) {
+		this.filaService = filaService;
+		this.chamadoService = chamadoService;
 	}
 
 	/** Metodo mapeando a requisição para pagina Index
@@ -61,18 +62,6 @@ public class ManterChamadosController {
 			return filaService.listarFilas();
 	}
 	
-	/** Metodo consulta e retorna os Chamados de acordo com a Fila de Serviço
-	 * @author	Ermerson Rafael da Silva
-	 * @version 1.00
-	 * @since   Release Inicial
-	 * @param	Fila
-	 * @return 	List<Chamado>
-	 */
-	private List<Chamado> listarChamados(Fila fila) throws IOException{
-			return chamadoService.listarChamados(fila);
-	}
-	
-	
 	/** Metodo mapeando a requisição para pagina de listar Filas
 	 * @author	Ermerson Rafael da Silva
 	 * @version 1.00
@@ -84,12 +73,13 @@ public class ManterChamadosController {
 	public String listarFilasExibir(Model model) {
 		try {
 			model.addAttribute("filas", listarFilas());
-			return "Chamado/ChamadoListar";
+			return "ChamadoListar";
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Erro";
 		}
 	}
+	
 	/** Metodo mapeando a requisição para pagina de listar os chamados
 	 * @author	Ermerson Rafael da Silva
 	 * @version 1.00
@@ -101,15 +91,14 @@ public class ManterChamadosController {
 	public String listarChamadosExibir(@Valid Fila fila, BindingResult result, Model model) {
 		try {
 			if (result.hasFieldErrors("id")) {
-				model.addAttribute("filas", listarFilas());
 				System.out.println("Deu erro " + result.toString());
-				return "Chamado/ChamadoListar";
+				return "redirect:listar_filas_exibir";
 			}
-			fila = filaService.carregar(fila.getId());			
-			model.addAttribute("fila", fila);			
-			model.addAttribute("chamados", listarChamados(fila));
+			fila = filaService.carregar(fila.getId());
+			model.addAttribute("fila", fila);
+			model.addAttribute("chamados", chamadoService.listarChamados(fila));
 			
-			return "Chamado/ChamadoListarExibir";
+			return "ChamadoListarExibir";
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,15 +113,14 @@ public class ManterChamadosController {
 	 * @param	Fila, BindingResult, Model
 	 * @return 	String
 	 */	
-	@RequestMapping("/novo_chamado")
-	public String novoChamado(Model model) {
+	@RequestMapping("/criar_novo_chamado")
+	public String criarNovoChamado(Model model) {
 		try {
 			model.addAttribute("filas", listarFilas());
-			return "Chamado/IncluirChamado";
-			
-		}catch(IOException e) {
+			return "ChamadoCriar";
+		} catch (IOException e) {
 			e.printStackTrace();
-			return "erro";
+			return "Erro";
 		}
 	}
 	
@@ -143,22 +131,21 @@ public class ManterChamadosController {
 	 * @param	Fila, BindingResult, Model
 	 * @return 	String
 	 */	
-	@RequestMapping("/incluir_chamado")
-	public String incluirChamado(@Valid Fila fila, @Valid Chamado chamado, BindingResult result, Model model) {
+	@RequestMapping("/salvar_chamado")
+	public String listarChamadosExibir(@Valid Chamado chamado, BindingResult result, Model model) {
 		try {
-			if(result.hasFieldErrors("descricao")) {
-				model.addAttribute("filas", listarFilas());
+			if (result.hasFieldErrors("id")) {
 				System.out.println("Deu erro " + result.toString());
-				return "Chamado/IncluirChamado";
+				return "redirect:criar_novo_chamado";
 			}
-			chamado.setFila(fila);
-			chamadoService.incluirChamado(chamado);			
-			model.addAttribute("chamado", chamado);
-			return "Chamado/VisualizarChamado";
 			
-		}catch(IOException e) {
+			int id = chamadoService.criarChamado(chamado);
+			model.addAttribute("id_chamado", id);
+			return "ChamadoSalvo";
+
+		} catch (IOException e) {
 			e.printStackTrace();
-			return "erro";
+			return "Erro";
 		}
 	}
 }

@@ -8,17 +8,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /** Classe Bean Chamado
- * @author	Ermerson Rafael da Silva
+ * @author	816122707 - Ermerson Rafael da Silva
  * @version 1.00
  * @since   Release Inicial
  */	
 public class Chamado implements Serializable {
-	
+	public static final String OPEN = "aberto";
+	public static final String CLOSE = "fechado";
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull(message="O id chamado não pode ser nulo")
 	@Min(value=1, message="O id chamado não pode ser vazio")
-	private int 	id;
+	private int id;
 	
 	@NotNull(message="A descrição não pode ser nula.")
 	@Size(min=5, max=45, message="a descrição do chamado deve estar entre 5 e 45 caracteres.")
@@ -30,15 +31,15 @@ public class Chamado implements Serializable {
 	
 	@NotNull(message="A data de abertura não pode ser nula")
 	@Min(value=1, message="A data de abertura não pode vazia")
-	private Date	dt_abertura;
-	private Date	dt_fechamento;
+	private Date dt_abertura;
+	private Date dt_fechamento;
 	
 	@NotNull
 	@Min(value=1, message="Deve conter um fila para esse chamado")
 	private Fila fila;
 	
 	/** Metodo modificador getId retorna o valor do id de um chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	int
@@ -48,7 +49,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo setId altera o valor do id de uma Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	Int
@@ -58,7 +59,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo getDescricao retorna a descricao de uma Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	String
@@ -68,17 +69,17 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo setDescricao altera a propriedade  descricao
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	String
-	 */	
+	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 	
 	/** Metodo getStatus retorna o Status de chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	String
@@ -88,17 +89,17 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo setStatus Altera o status de um chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	String
-	 */	
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 	
 	/** Metodo getDt_abertura retorna a data de abertura de um Chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	Date
@@ -108,7 +109,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo  setDt_abertura altera a data de abertura de um Chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	Date
@@ -118,7 +119,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo getDt_fechamento retorna a data de fechamento de um Chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	Date
@@ -128,7 +129,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo  setDt_fechamento Altera a data de fechamento de um Chamado
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	Date
@@ -138,7 +139,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo retorna o objeto Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	Fila
@@ -148,7 +149,7 @@ public class Chamado implements Serializable {
 	}
 	
 	/** Metodo Altera o objeto Fila 
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	Fila
@@ -156,6 +157,19 @@ public class Chamado implements Serializable {
 	public void setFila(Fila fila) {
 		this.fila = fila;
 	}
+	
+	/** Metodo retorna um Chamado em objeto
+	 * @author	816122707 - Ermerson Rafael da Silva
+	 * @version 1.00
+	 * @since   Release Inicial
+	 * @param	Fila
+	 */	
+	@Override
+	public String toString() {
+		return "Chamado [id=" + id + ", descricao=" + descricao + ", status=" + status + ", dt_abertura=" + dt_abertura
+				+ ", dt_fechamento=" + dt_fechamento + ", fila=" + fila.getNome() + "]";
+	}	
+	
 	
 	
 }

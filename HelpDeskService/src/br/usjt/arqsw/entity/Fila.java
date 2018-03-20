@@ -24,7 +24,7 @@ public class Fila implements Serializable{
 	private String nome;
 	
 	/** Metodo modificador getId retorna o valor do id de uma Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	int
@@ -34,7 +34,7 @@ public class Fila implements Serializable{
 	}
 	
 	/** Metodo Altera setId retorna o valor do id de uma Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param 	int
@@ -44,7 +44,7 @@ public class Fila implements Serializable{
 	}
 	
 	/** Metodo modificador getNome retorna do nome de uma Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	String
@@ -54,7 +54,7 @@ public class Fila implements Serializable{
 	}
 	
 	/** Metodo modificador setNome Altera o valor do nome de uma Fila
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @param	String
@@ -64,7 +64,7 @@ public class Fila implements Serializable{
 	}
 	
 	/** Metodo modificador toString retorna todos os atributos em uma String
-	 * @author	Ermerson Rafael da Silva
+	 * @author	816122707 - Ermerson Rafael da Silva
 	 * @version 1.00
 	 * @since   Release Inicial
 	 * @return 	String
